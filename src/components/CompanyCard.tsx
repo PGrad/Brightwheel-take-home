@@ -1,6 +1,7 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import "./CompanyCard.css"
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import StarIcon from '@mui/icons-material/Star';
 import { changeStarStatus } from "../api";
 import { CompanyCardType } from "../types";
 import { useState } from "react";
@@ -14,6 +15,7 @@ export default function CompanyCard({
     image,
 }: CompanyCardType) {
     const [isStarred, setIsStarred] = useState(starred);
+    const [isHovered, setIsHovered] = useState(false);
 
     const onStarChange = (e: any) => {
         setIsStarred(!isStarred);
@@ -21,7 +23,12 @@ export default function CompanyCard({
     };
 
     return (
-        <section className="card">
+        <section
+            className="card"
+            onClick={onStarChange}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             {image &&
                 <div className="img-container">
                     <img
@@ -40,14 +47,22 @@ export default function CompanyCard({
                 </Box>
             }
             <Typography sx={{ gridColumn: "2" }} variant="body1">{description}</Typography>
-            <IconButton
-                sx={{ gridRow: "3", gridColumn: "3", width: "fit-content" }}
+            <Button
+                sx={{
+                    display: "flex",
+                    gap: ".5em",
+                    gridRow: "3",
+                    gridColumn: "2 / 3",
+                    width: "fit-content",
+                    justifySelf: "end",
+                }}
+                color="success"
+                variant="contained"
                 aria-label="star"
-                color={isStarred ? "primary" : "default"}
-                onClick={onStarChange}
             >
-                <StarOutlineIcon /> Favorite
-            </IconButton>
+                {isStarred ? <StarIcon/> : <StarOutlineIcon/>}
+                {isStarred ? "Remove from Favorites" : "Add to Favorites" }
+            </Button>
         </section>
     );
 }
