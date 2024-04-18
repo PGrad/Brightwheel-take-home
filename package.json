@@ -16,14 +16,17 @@
     "start:mock": "run-p dev start:api"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.15",
+    "jest": "^29.7.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "storybook": "^8.0.8"
   },
   "devDependencies": {
-    "@dicebear/avatars": "^4.9.1",
     "@dicebear/adventurer": "^4.10.2",
-    "json-server": "^0.16.3",
-    "npm-run-all": "^4.1.5",
+    "@dicebear/avatars": "^4.9.1",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -32,6 +35,8 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "json-server": "^0.16.3",
+    "npm-run-all": "^4.1.5",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   },
