@@ -2,7 +2,7 @@
 // default imports, but I don't
 // consider this to be a problem
 // at the moment.
-import { Box, IconButton, TextField } from "@mui/material";
+import { Box, Button, IconButton, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 
 type ValueChangeFunc = (value: string) => void;
@@ -22,9 +22,9 @@ export default function Search({
                 onChange={(e) => onValueChange(e.target.value)}
                 variant="outlined"
             />
-            <IconButton onClick={onSearch}>
+            <Button onClick={onSearch} variant="contained">
                 <SearchIcon />
-            </IconButton>
+            </Button>
         </Box>
     );
 }
