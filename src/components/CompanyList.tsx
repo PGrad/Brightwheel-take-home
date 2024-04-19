@@ -3,6 +3,7 @@ import Search from "./Search";
 import { debounce, getAllListings, getListingsByQuery } from "../api";
 import CompanyCard from "./CompanyCard";
 import { CompanyCardType } from "../types";
+import { CompanyCardType, KeyValueObjectType } from "../types";
 import "./CompanyList.css";
 
 export default function CompanyList() {

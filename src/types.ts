@@ -11,3 +11,7 @@ export type CompanyCardType = {
     starred: boolean;
     image: string;
 };
+
+export type KeyValueObjectType = {
+    [key: string]: string | undefined
+};
