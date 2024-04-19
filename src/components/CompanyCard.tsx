@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import "./CompanyCard.css"
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
@@ -15,7 +15,6 @@ export default function CompanyCard({
     image,
 }: CompanyCardType) {
     const [isStarred, setIsStarred] = useState(starred);
-    const [isHovered, setIsHovered] = useState(false);
 
     const onStarChange = (e: any) => {
         setIsStarred(!isStarred);
@@ -26,8 +25,6 @@ export default function CompanyCard({
         <section
             className="card"
             onClick={onStarChange}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
         >
             {image &&
                 <div className="img-container">
