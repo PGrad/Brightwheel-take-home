@@ -22,11 +22,11 @@ export async function getAllListings(pageNo: number = 1) {
 
 export async function changeStarStatus(id: string, status: boolean): Promise<void> {
     const response = await fetch(`${API_ENDPOINT}/search/${id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ isStarred: status }),
+        body: JSON.stringify({ starred: status }),
     });
 
     if (!response.ok) {
