@@ -1,43 +1,55 @@
 import { useEffect, useState } from "react";
 import Search from "./Search";
-import { debounce, getAllListings, getListingsByQuery } from "../api";
+import { debounce, getListings } from "../api";
 import CompanyCard from "./CompanyCard";
-import { CompanyCardType } from "../types";
 import { CompanyCardType, KeyValueObjectType } from "../types";
 import "./CompanyList.css";
+import { Typography } from "@mui/material";
 
 export default function CompanyList() {
     const [pageNo, setPageNo] = useState(1);
     const [companies, setCompanies] = useState<CompanyCardType[]>([]);
     const [query, setQuery] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(0);
+    const [links, setLinks] = useState<KeyValueObjectType>({});
 
     useEffect(() => {
-        const getListings = async () => {
-            let listings: CompanyCardType[] = [];
+        const getCompanies = async () => {
+            const queryObj = query ? { "name_like": `^${query}` } : {};
+            const { results, count, links } = (await getListings(queryObj, pageNo));
 
-            if (query === '') {
-                listings = await getAllListings(pageNo);
-            } else {
-                listings = await getListingsByQuery(query, pageNo);
-            }
-
-            listings = listings.filter((listing: CompanyCardType) =>
+            const listings = results.filter((listing: CompanyCardType) =>
                 listing.name && listing.name !== ""
             );
 
-            setCompanies([...listings])
+            setCompanies([...listings]);
+            setCount(count);
+            setLinks({ ...links });
+
+            setLoading(false);
         };
 
-        getListings();
+        getCompanies();
+
+        window.addEventListener('scroll', () => {
+            if (!loading && (window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight) {
+                if (pageNo !== -1) {
+                    setPageNo(pageNo + 1);
+                    setLoading(true);
+                }
+            }
+        });
     }, [pageNo, query]);
 
     const onValueChange = debounce((value: string) => {
         setQuery(value);
         setPageNo(1);
+        setCompanies([]);
     }, 100);
 
     const onSearch = () => {
-        // Do nothing.
+        // Do nothing for now.
         // The query will already
         // be evaluated in onValueChange.
         // I just leave the option for a button
@@ -53,8 +65,12 @@ export default function CompanyList() {
                 onSearch={onSearch}
             />
 
+            <Typography variant="body1">
+                { count > 0 ? `Showing ${companies.length} of ${count} results.` : "No results found." }
+            </Typography>
+
             <ul className="list-no-decoration">
-                {companies.length > 0 ?
+                {companies.length > 0 &&
                     companies.map((company: CompanyCardType, idx: number) => (
                         <li key={idx}>
                             <CompanyCard
@@ -67,9 +83,7 @@ export default function CompanyList() {
                             />
                         </li>
                     )
-                ) :
-                    <p>No results found.</p>
-                }
+                )}
             </ul>
         </main>
     );
