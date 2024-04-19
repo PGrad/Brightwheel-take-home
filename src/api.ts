@@ -1,23 +1,41 @@
+import { CompanyCardType, KeyValueObjectType } from "./types";
+
 const API_ENDPOINT = 'http://localhost:3001';
 
-export async function getListingsByQuery(query: string, pageNo: number = 1) {
-    const response = await fetch(`${API_ENDPOINT}/search?name_like=^${query}&_limit=10&_page=${pageNo}`);
+export async function getListings(query: KeyValueObjectType, pageNo: number = 1): Promise<{
+    results: CompanyCardType[],
+    count: number,
+    links: KeyValueObjectType
+}> {
+    const query_string = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
+    const response = await fetch(`${API_ENDPOINT}/search?${query_string}&_limit=10&_page=${pageNo}`);
 
     if (!response.ok) {
         throw new Error('Failed to fetch listings.');
     }
 
-    return await response.json();
-}
+    // Get the total count of results.
+    const count = response.headers.get('X-Total-Count');
 
-export async function getAllListings(pageNo: number = 1) {
-    const response = await fetch(`${API_ENDPOINT}/search?_limit=10&_page=${pageNo}`);
+    // Get the first, prev, next, and last links from the response header
+    // if available.
+    const links = response.headers.get('Link')?.split(',');
+    const linksObj = links?.reduce((acc, link) => {
+        const pair = link.split(';');
+        acc = {
+            [pair[1]]: pair[0],
+            ...acc
+        }
+        return acc;
+    }, {});
 
-    if (!response.ok) {
-        throw new Error('Failed to fetch listings.');
-    }
-
-    return await response.json();
+    return {
+        "results": await response.json(),
+        "count": count ? Number(count) : 0,
+        "links": {
+            ...linksObj
+        }
+    };
 }
 
 export async function changeStarStatus(id: string, status: boolean): Promise<void> {
