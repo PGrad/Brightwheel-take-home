@@ -1,6 +1,7 @@
 import { CompanyCardType, KeyValueObjectType } from "./types";
 
 const API_ENDPOINT = 'http://localhost:3001';
+export const PAGE_SIZE = 10;
 
 export async function getListings(query: KeyValueObjectType, pageNo: number = 1): Promise<{
     results: CompanyCardType[],
@@ -8,7 +9,7 @@ export async function getListings(query: KeyValueObjectType, pageNo: number = 1)
     links: KeyValueObjectType
 }> {
     const query_string = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
-    const response = await fetch(`${API_ENDPOINT}/search?${query_string}&_limit=10&_page=${pageNo}`);
+    const response = await fetch(`${API_ENDPOINT}/search?${query_string}&_limit=${PAGE_SIZE}&_page=${pageNo}`);
 
     if (!response.ok) {
         throw new Error('Failed to fetch listings.');
@@ -21,11 +22,12 @@ export async function getListings(query: KeyValueObjectType, pageNo: number = 1)
     // if available.
     const links = response.headers.get('Link')?.split(',');
     const linksObj = links?.reduce((acc, link) => {
-        const pair = link.split(';');
+        const pair = link.split(';')
+        const key = pair[1].match(/rel="(.*)"/)![1];
         acc = {
-            [pair[1]]: pair[0],
+            [key]: pair[0],
             ...acc
-        }
+        };
         return acc;
     }, {});
 
