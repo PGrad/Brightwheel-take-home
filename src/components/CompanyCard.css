@@ -9,6 +9,7 @@
     box-shadow: 0 8px 46px rgba(0,0,0,.06);
     margin: 2em;
     padding: 1em;
+    text-align: left;
 }
 
 .card:hover {
