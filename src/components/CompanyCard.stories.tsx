@@ -25,13 +25,7 @@ const companyData = {
 };
 
 export const Default: Story = {
-    render: () =>
-        <CompanyCard
-            name={companyData.name}
-            id={companyData.id}
-            description={companyData.description}
-            address={companyData.address}
-            starred={companyData.starred}
-            image={companyData.image}
-        />
+    args: {
+        company: { ...companyData }
+    }
 };

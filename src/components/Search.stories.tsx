@@ -11,8 +11,7 @@ export default meta;
 type Story = StoryObj<typeof Search>;
 
 export const Default: Story = {
-    render: () => <Search
-        onValueChange={(value: string) => console.log(value)}
-        onSearch={() => console.log('search')}
-    />
+    args: {
+        onValueChange: (value: string) => console.log(value)
+    }
 };

@@ -2,7 +2,10 @@
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 
 const config = {
-    stories: ['../src/components/**/*.stories.@(ts|tsx)'],
+    addons: [
+        '@storybook/addon-essentials',
+    ],
+    stories: ['../src/**/*.stories.@(ts|tsx)'],
     staticDirs: ['../public'],
     framework: {
         name: '@storybook/react-vite',

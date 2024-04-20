@@ -11,6 +11,8 @@ export default meta;
 type Story = StoryObj<typeof CompanyList>;
 
 export const Default: Story = {
-    render: () =>
-        <CompanyList />
+    args: {
+        query: "A",
+        favorited: false
+    }
 };

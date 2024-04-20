@@ -27,6 +27,7 @@
   "devDependencies": {
     "@dicebear/adventurer": "^4.10.2",
     "@dicebear/avatars": "^4.9.1",
+    "@storybook/addon-essentials": "^8.0.8",
     "@storybook/react-vite": "^8.0.8",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
