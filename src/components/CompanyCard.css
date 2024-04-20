@@ -1,15 +1,29 @@
 .card {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 2fr 2fr 1fr;
-    max-height: 10em;
     box-shadow: 1em;
     border: 0;
     border-radius: 1em;
     box-shadow: 0 8px 46px rgba(0,0,0,.06);
     margin: 2em;
-    padding: 1em;
+    padding: 2em;
     text-align: left;
+    gap: 1em;
+    max-width: 30em;
+}
+
+@media screen and (max-width: 768px) {
+    .img-container {
+        grid-row: 1 / 2;
+    }
+
+    .star-button {
+        grid-column: 1 / 3;
+    }
+
+    .card p {
+        grid-column: 1 / 3;
+    }
 }
 
 .card:hover {
@@ -19,7 +33,6 @@
 
 .img-container {
     display: inline-block;
-    grid-row: 1 / 4;
     grid-column: 1;
 }
 
@@ -27,11 +40,28 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    margin: auto;
 }
+
+@media screen and (min-width: 768px) {
+    .img-container {
+        grid-row: 1 / 4;
+    }
+
+    .img-container img {
+        min-width: 10em;
+    }
+
+    .star-button {
+        grid-column: 2 / 3;
+    }
+}
+
 
 .card p {
     display: flex;
-    align-items: end;
+    height: fit-content;
+    grid-row: 2 / 3;
 }
 
 .list-no-decoration {

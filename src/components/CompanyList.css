@@ -1,6 +1,6 @@
 .listings {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1;
     align-items: center;
     justify-content: center;
 }
@@ -10,4 +10,14 @@
     justify-content: center;
     align-items: center;
     margin: 1em;
+}
+
+.list {
+    display: grid;
+}
+
+@media screen and (min-width: 1324px) {
+    .list {
+        grid-template-columns: 1fr 1fr;
+    }
 }
