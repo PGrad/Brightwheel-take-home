@@ -2,29 +2,31 @@ import { Box, Button, Typography } from "@mui/material";
 import "./CompanyCard.css"
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
-import { changeStarStatus } from "../api";
-import { CompanyCardType } from "../types";
+import { CompanyCardType, StarChangeHandlerType } from "../types";
 import { useState } from "react";
 
 export default function CompanyCard({
-    id,
-    name,
-    description,
-    address,
-    starred,
-    image,
-}: CompanyCardType) {
+    company,
+    onStarChange,
+}: {
+    company: CompanyCardType,
+    onStarChange: StarChangeHandlerType,
+}) {
+    const { id, name, description, address, starred, image } = company;
     const [isStarred, setIsStarred] = useState(starred);
 
-    const onStarChange = (e: any) => {
-        setIsStarred(!isStarred);
-        changeStarStatus(id, !isStarred)
+    const starChange = (_: any) => {
+        setIsStarred(prevStarred => {
+            onStarChange(id, prevStarred);
+
+            return !prevStarred;
+        });
     };
 
     return (
         <section
             className="card"
-            onClick={onStarChange}
+            onClick={starChange}
         >
             {image &&
                 <div className="img-container">
@@ -35,7 +37,7 @@ export default function CompanyCard({
                 </div>
             }
             {address &&
-                <Box sx={{ gridColumn: "2" }}>
+                <Box sx={{ gridColumn: "2", paddingBottom: ".5em", borderBottom: "1px solid black" }}>
                     <Typography variant="h4">{name}</Typography>
                     <address>
                         {address.address1}<br/>
@@ -49,10 +51,9 @@ export default function CompanyCard({
                     display: "flex",
                     gap: ".5em",
                     gridRow: "3",
-                    gridColumn: "2 / 3",
                     width: "fit-content",
-                    justifySelf: "end",
                 }}
+                className="star-button"
                 color="success"
                 variant="contained"
                 aria-label="star"

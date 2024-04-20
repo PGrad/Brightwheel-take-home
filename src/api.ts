@@ -3,13 +3,24 @@ import { CompanyCardType, KeyValueObjectType } from "./types";
 const API_ENDPOINT = 'http://localhost:3001';
 export const PAGE_SIZE = 10;
 
-export async function getListings(query: KeyValueObjectType, pageNo: number = 1): Promise<{
+export async function getFavoritesCount(query: KeyValueObjectType): Promise<number> {
+    const query_string = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
+    const response = await fetch(`${API_ENDPOINT}/search?${query_string}&_limit=1`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch count.');
+    }
+
+    return Number(response.headers.get('X-Total-Count'));
+}
+
+export async function getListings(query: KeyValueObjectType): Promise<{
     results: CompanyCardType[],
     count: number,
     links: KeyValueObjectType
 }> {
     const query_string = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
-    const response = await fetch(`${API_ENDPOINT}/search?${query_string}&_limit=${PAGE_SIZE}&_page=${pageNo}`);
+    const response = await fetch(`${API_ENDPOINT}/search?${query_string}`);
 
     if (!response.ok) {
         throw new Error('Failed to fetch listings.');
@@ -23,6 +34,10 @@ export async function getListings(query: KeyValueObjectType, pageNo: number = 1)
     const links = response.headers.get('Link')?.split(',');
     const linksObj = links?.reduce((acc, link) => {
         const pair = link.split(';')
+        if (!pair || !pair[0] || !pair[1]) {
+            return acc;
+        }
+
         const key = pair[1].match(/rel="(.*)"/)![1];
         acc = {
             [key]: pair[0],

@@ -13,6 +13,6 @@ type Story = StoryObj<typeof CompanyList>;
 export const Default: Story = {
     args: {
         query: "A",
-        favorited: false
+        favoritesOnly: false
     }
 };

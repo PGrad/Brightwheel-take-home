@@ -13,5 +13,7 @@ export type CompanyCardType = {
 };
 
 export type KeyValueObjectType = {
-    [key: string]: string | undefined
+    [key: string]: any | undefined
 };
+
+export type StarChangeHandlerType = (id:string, wasStarred: boolean) => void;

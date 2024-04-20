@@ -3,6 +3,7 @@ import { debounce, getFavoritesCount } from "../api";
 import Search from "./Search";
 import { Checkbox, Typography } from "@mui/material";
 import CompanyList from "./CompanyList";
+import { changeStarStatus } from "../api";
 import "./CompanySearchPage.css";
 
 export default function CompanySearchPage() {
@@ -28,10 +29,21 @@ export default function CompanySearchPage() {
       setQuery(value);
   }, 100);
 
+  const onStarChange = (id: string, wasStarred: boolean) => {
+    if (wasStarred) {
+        setCount(count - 1);
+    } else {
+        setCount(count + 1);
+    }
+
+    changeStarStatus(id, !wasStarred);
+  };
+
   return (
     <main className="main">
       <Search
           onValueChange={onValueChange}
+          placeholderText={favoritesOnly ? "Search on your favorites..." : "Search for a company..."}
       />
 
       <div className="checkbox">
@@ -40,13 +52,14 @@ export default function CompanySearchPage() {
           onChange={onFavoritesClick}
         />
         <Typography variant="body1">
-          See Favorites ({count})
+          See Favorites ({count} total)
         </Typography>
       </div>
 
       <CompanyList
           query={query}
-          favorited={favoritesOnly}
+          favoritesOnly={favoritesOnly}
+          onStarChange={onStarChange}
       />
     </main>
   );
