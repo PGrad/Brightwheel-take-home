@@ -37,7 +37,10 @@ export default function CompanyCard({
                 </div>
             }
             {address &&
-                <Box sx={{ gridColumn: "2", paddingBottom: ".5em", borderBottom: "1px solid black" }}>
+                <Box
+                    className="address"
+                    sx={{ paddingBottom: ".5em", borderBottom: "1px solid black" }}
+                >
                     <Typography variant="h4">{name}</Typography>
                     <address>
                         {address.address1}<br/>
@@ -45,7 +48,11 @@ export default function CompanyCard({
                     </address>
                 </Box>
             }
-            <Typography sx={{ gridColumn: "2" }} variant="body1">{description}</Typography>
+            <Typography
+                variant="body1"
+            >
+                {description}
+            </Typography>
             <Button
                 sx={{
                     display: "flex",
