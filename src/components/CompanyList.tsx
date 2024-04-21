@@ -117,7 +117,7 @@ export default function CompanyList({
         <Box className="listings">
             {!favoritesOnly && <Typography
                 variant="body1"
-                sx={{ margin: "1em 0 .5em 0" }}
+                sx={{ margin: "1em 0 .5em 0", textAlign: "center"}}
                 ref={countRef}
             >
                 { count > 0 ? `Showing ${companies.length} of ${count} results.` : "No results found." }
