@@ -26,7 +26,7 @@ export default function CompanySearchPage() {
   };
 
   const onValueChange = debounce((value: string) => {
-      setQuery(value);
+    setQuery(value);
   }, 100);
 
   const onStarChange = (id: string, wasStarred: boolean) => {
@@ -57,9 +57,10 @@ export default function CompanySearchPage() {
       </div>
 
       <CompanyList
-          query={query}
-          favoritesOnly={favoritesOnly}
-          onStarChange={onStarChange}
+        key={query}
+        query={query}
+        favoritesOnly={favoritesOnly}
+        onStarChange={onStarChange}
       />
     </main>
   );
