@@ -51,7 +51,7 @@ export default function CompanyList({
     useEffect(() => {
         const getCompanies = async () => {
             let queryObj: KeyValueObjectType = query ? {
-                "name_like": `^${query}`,
+                "name_like": `^${encodeURIComponent(query)}`,
             } : {};
 
             if (favoritesOnly) {
