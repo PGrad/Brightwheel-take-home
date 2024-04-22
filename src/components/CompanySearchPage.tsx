@@ -67,7 +67,6 @@ export default function CompanySearchPage() {
       </div>
 
       <CompanyList
-        key={query}
         query={query}
         favoritesOnly={favoritesOnly}
         onStarChange={onStarChange}

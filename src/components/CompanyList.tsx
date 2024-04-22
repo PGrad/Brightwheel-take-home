@@ -49,6 +49,10 @@ export default function CompanyList({
     const countRef = useRef<HTMLElement>(null); 
 
     useEffect(() => {
+        setPageNo(1);
+    }, [query]);
+
+    useEffect(() => {
         const getCompanies = async () => {
             let queryObj: KeyValueObjectType = query ? {
                 "name_like": `^${encodeURIComponent(query)}`,
@@ -161,7 +165,7 @@ export default function CompanyList({
 
                     <Button
                         onClick={() => goToPage(pageNo - 1)}
-                        sx={setHidden(!links.prev)}
+                        sx={setHidden(!links.prev || (pageNo == 1))}
                         aria-label="Previous"
                     >
                         <KeyboardArrowLeftIcon />
@@ -173,7 +177,7 @@ export default function CompanyList({
 
                     <Button
                         onClick={() => goToPage(pageNo + 1)}
-                        sx={setHidden(!links.next)}
+                        sx={setHidden(!links.next || (pageNo == lastPageNo))}
                         aria-label="Next"
                     >
                         <KeyboardArrowRightIcon />
