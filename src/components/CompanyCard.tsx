@@ -15,12 +15,12 @@ export default function CompanyCard({
     const { id, name, description, address, starred, image } = company;
     const [isStarred, setIsStarred] = useState(starred);
 
-    const starChange = (_: any) => {
-        setIsStarred(prevStarred => {
-            onStarChange(id, prevStarred);
-
-            return !prevStarred;
-        });
+    const starChange = async (_: any) => {
+        if (await onStarChange(id, isStarred)) {
+            // Only update the state if
+            // the API call was successful.
+            setIsStarred(!isStarred);
+        }
     };
 
     return (

@@ -102,15 +102,19 @@ export default function CompanyList({
         countRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    const starChange = (id: string, wasStarred: boolean) => {
-        if (wasStarred && favoritesOnly) {
-            setCompanies([...companies.filter(
-                (company: CompanyCardType) => company.id !== id
-            )]);
+    const starChange = async (id: string, wasStarred: boolean) => {
+        // Call the parent's onStarChange function.
+        if (await onStarChange(id, wasStarred)) {
+            if (wasStarred && favoritesOnly) {
+                setCompanies([...companies.filter(
+                    (company: CompanyCardType) => company.id !== id
+                )]);
+            }
+
+            return true;
         }
 
-        // Call the parent's onStarChange function.
-        onStarChange(id, wasStarred);
+        return false;
     };
 
     return (

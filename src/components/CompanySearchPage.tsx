@@ -5,6 +5,7 @@ import { Checkbox, Typography } from "@mui/material";
 import CompanyList from "./CompanyList";
 import { changeStarStatus } from "../api";
 import "./CompanySearchPage.css";
+import { showError } from "../utils";
 
 export default function CompanySearchPage() {
   const [query, setQuery] = useState("");
@@ -29,14 +30,22 @@ export default function CompanySearchPage() {
     setQuery(value);
   }, 100);
 
-  const onStarChange = (id: string, wasStarred: boolean) => {
-    if (wasStarred) {
-        setCount(count - 1);
-    } else {
-        setCount(count + 1);
-    }
+  const onStarChange = async (id: string, wasStarred: boolean) => {
+    // Show an error to the user if the star status could not be updated.
+    if (await changeStarStatus(id, !wasStarred)) {
+        console.log("Star status updated.");
 
-    changeStarStatus(id, !wasStarred);
+        if (wasStarred) {
+            setCount(count - 1);
+        } else {
+            setCount(count + 1);
+        }
+
+        return true;
+    } else {
+        showError("Failed to update star status.");
+        return false;
+    }
   };
 
   return (

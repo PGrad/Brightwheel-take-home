@@ -16,4 +16,4 @@ export type KeyValueObjectType = {
     [key: string]: any | undefined
 };
 
-export type StarChangeHandlerType = (id:string, wasStarred: boolean) => void;
+export type StarChangeHandlerType = (id:string, wasStarred: boolean) => Promise<boolean>;

@@ -8,7 +8,8 @@ export async function getFavoritesCount(query: KeyValueObjectType): Promise<numb
     const response = await fetch(`${API_ENDPOINT}/search?${query_string}&_limit=1`);
 
     if (!response.ok) {
-        throw new Error('Failed to fetch count.');
+        console.log('Failed to fetch count.');
+        return 0;
     }
 
     return Number(response.headers.get('X-Total-Count'));
@@ -23,7 +24,12 @@ export async function getListings(query: KeyValueObjectType): Promise<{
     const response = await fetch(`${API_ENDPOINT}/search?${query_string}`);
 
     if (!response.ok) {
-        throw new Error('Failed to fetch listings.');
+        console.log('Failed to fetch listings.');
+        return {
+            "results": [],
+            "count": 0,
+            "links": {}
+        }
     }
 
     // Get the total count of results.
@@ -55,7 +61,7 @@ export async function getListings(query: KeyValueObjectType): Promise<{
     };
 }
 
-export async function changeStarStatus(id: string, status: boolean): Promise<void> {
+export async function changeStarStatus(id: string, status: boolean): Promise<boolean> {
     const response = await fetch(`${API_ENDPOINT}/search/${id}`, {
         method: 'PATCH',
         headers: {
@@ -65,10 +71,11 @@ export async function changeStarStatus(id: string, status: boolean): Promise<voi
     });
 
     if (!response.ok) {
-        throw new Error('Failed to update star status.');
+        console.log('Failed to update star status.');
+        return false;
     }
 
-    return;
+    return true;
 }
 
 export function debounce(fn: any, delay: number) {
