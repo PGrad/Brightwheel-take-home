@@ -59,8 +59,9 @@ export default function CompanySearchPage() {
         <Checkbox
           checked={favoritesOnly}
           onChange={onFavoritesClick}
+          aria-labelledby="favorites"
         />
-        <Typography variant="body1">
+        <Typography id="favorites" aria-hidden variant="body1">
           See Favorites ({count} total)
         </Typography>
       </div>

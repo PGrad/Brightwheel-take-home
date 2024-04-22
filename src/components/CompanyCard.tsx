@@ -63,7 +63,7 @@ export default function CompanyCard({
                 className="star-button"
                 color="success"
                 variant="contained"
-                aria-label="star"
+                aria-label={`${isStarred ? "Remove" : "Add" }`}
             >
                 {isStarred ? <StarIcon/> : <StarOutlineIcon/>}
                 {isStarred ? "Remove from Favorites" : "Add to Favorites" }

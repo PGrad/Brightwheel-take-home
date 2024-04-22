@@ -154,6 +154,7 @@ export default function CompanyList({
                     <Button
                         onClick={() => goToPage(1)}
                         sx={setHidden(!links.first || (pageNo == 1))}
+                        aria-label="First"
                     >
                         <FirstPageIcon />
                     </Button>
@@ -161,6 +162,7 @@ export default function CompanyList({
                     <Button
                         onClick={() => goToPage(pageNo - 1)}
                         sx={setHidden(!links.prev)}
+                        aria-label="Previous"
                     >
                         <KeyboardArrowLeftIcon />
                     </Button>
@@ -172,6 +174,7 @@ export default function CompanyList({
                     <Button
                         onClick={() => goToPage(pageNo + 1)}
                         sx={setHidden(!links.next)}
+                        aria-label="Next"
                     >
                         <KeyboardArrowRightIcon />
                     </Button>
@@ -179,6 +182,7 @@ export default function CompanyList({
                     <Button
                         onClick={() => goToPage(lastPageNo)}
                         sx={setHidden(!links.last || (pageNo == lastPageNo))}
+                        aria-label="Last"
                     >
                         <LastPageIcon />
                     </Button>
